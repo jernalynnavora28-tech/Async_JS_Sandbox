@@ -83,3 +83,26 @@ document.getElementById("btn-axios").addEventListener("click", async () => {
     out.textContent = "Failed to fetch joke: " + err.message;
   }
 });
+// Task 6: Parallel Requests
+document.getElementById("btn-parallel").addEventListener("click", async () => {
+  const out = document.getElementById("out-parallel");
+  out.textContent = "Fetching 3 jokes in parallel...\n";
+
+  const start = performance.now();
+
+  try {
+    const promises = [
+      axios.get("https://icanhazdadjoke.com/", { headers: { Accept: "application/json" } }),
+      axios.get("https://icanhazdadjoke.com/", { headers: { Accept: "application/json" } }),
+      axios.get("https://icanhazdadjoke.com/", { headers: { Accept: "application/json" } }),
+    ];
+
+    const responses = await Promise.all(promises);
+    const jokes = responses.map((r) => r.data.joke);
+    const elapsed = Math.round(performance.now() - start);
+
+    out.textContent = jokes.join("\n\n") + `\n\n(Fetched in ${elapsed} ms)`;
+  } catch (err) {
+    out.textContent = "One or more requests failed: " + err.message;
+  }
+});
