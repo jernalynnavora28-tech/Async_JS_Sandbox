@@ -69,3 +69,17 @@ document.getElementById("btn-fetch").addEventListener("click", async () => {
     out.textContent = "Failed to fetch joke: " + err.message;
   }
 });
+// Task 5: Axios Version
+document.getElementById("btn-axios").addEventListener("click", async () => {
+  const out = document.getElementById("out-axios");
+  out.textContent = "Loading...";
+
+  try {
+    const response = await axios.get("https://icanhazdadjoke.com/", {
+      headers: { Accept: "application/json" },
+    });
+    out.textContent = response.data.joke;
+  } catch (err) {
+    out.textContent = "Failed to fetch joke: " + err.message;
+  }
+});
