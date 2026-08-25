@@ -35,3 +35,17 @@ document.getElementById("btn-chain").addEventListener("click", () => {
       out.textContent += "Error: " + err.message;
     });
 });
+// Task 3: Async / Await Rewrite
+document.getElementById("btn-async").addEventListener("click", async () => {
+  const out = document.getElementById("out-async");
+  out.textContent = "Starting async...\n";
+
+  try {
+    out.textContent += (await fakeApi("Login", 500)) + "\n";
+    out.textContent += (await fakeApi("Fetch Profile", 700)) + "\n";
+    out.textContent += (await fakeApi("Fetch Posts", 500)) + "\n";
+    out.textContent += "All done!";
+  } catch (err) {
+    out.textContent += "Error: " + err.message;
+  }
+});
