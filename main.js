@@ -11,3 +11,27 @@ document.getElementById("btn-delay").addEventListener("click", async () => {
   await wait(2000);
   out.textContent = "Done!";
 });
+// Task 2: Promise Chain
+const fakeApi = (label, ms) => wait(ms).then(() => `[${label}]`);
+
+document.getElementById("btn-chain").addEventListener("click", () => {
+  const out = document.getElementById("out-chain");
+  out.textContent = "Starting chain...\n";
+
+  fakeApi("Login", 500)
+    .then((r) => {
+      out.textContent += r + "\n";
+      return fakeApi("Fetch Profile", 700);
+    })
+    .then((r) => {
+      out.textContent += r + "\n";
+      return fakeApi("Fetch Posts", 500);
+    })
+    .then((r) => {
+      out.textContent += r + "\n";
+      out.textContent += "All done!";
+    })
+    .catch((err) => {
+      out.textContent += "Error: " + err.message;
+    });
+});
