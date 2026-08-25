@@ -49,3 +49,23 @@ document.getElementById("btn-async").addEventListener("click", async () => {
     out.textContent += "Error: " + err.message;
   }
 });
+// Task 4: Real Fetch
+document.getElementById("btn-fetch").addEventListener("click", async () => {
+  const out = document.getElementById("out-fetch");
+  out.textContent = "Loading...";
+
+  try {
+    const response = await fetch("https://icanhazdadjoke.com/", {
+      headers: { Accept: "application/json" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    out.textContent = data.joke;
+  } catch (err) {
+    out.textContent = "Failed to fetch joke: " + err.message;
+  }
+});
